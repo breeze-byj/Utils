@@ -449,6 +449,14 @@ class DriverFuncation:
         if type == 'scrollTop':
             js = 'window.scrollTo(0,document.body.scrollTop=0)'
             self.driver.execute_script(js)
+            
+    def find(self, element):
+        '''
+        元素选中效果
+        '''
+        STYLE = "background: green; border: 2px solid red;"
+        self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);", element, STYLE)
+        return element
 
     # 键盘操作
     def Enca_keys(self, to_element, keys_type):
