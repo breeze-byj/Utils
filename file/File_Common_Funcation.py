@@ -3,16 +3,6 @@ import win32file as w
 import os
 
 
-
-# 图片下载
-def download_img(url, num):
-    r = requests.get(url, stream=True)
-    if r.status_code == 200:
-        # 将内容写入图片
-        open(f'./{num}.jpg', 'wb').write(r.content)
-    del r
-
-
 # 判断文件资源是否被占用
 def Enca_is_open(filename):
     if not os.access(filename, os.F_OK):

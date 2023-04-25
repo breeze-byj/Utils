@@ -5,7 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import selenium.webdriver.support.ui as ui
+from selenium.common.exceptions import TimeoutException
 
 # 对webdriver进行封装,用于模拟浏览器操作
 class DriverFuncation:
@@ -345,6 +346,22 @@ class DriverFuncation:
         '''
         self.driver.implicitly_wait(time)
 
+    # 一直等待某元素可见，默认超时10秒
+    def is_visible(self,locator, timeout=10):
+        try:
+            ui.WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, locator)))
+            return True
+        except TimeoutException:
+            return False
+
+    # 一直等待某个元素消失，默认超时10秒
+    def is_not_visible(self,locator, timeout=10):
+        try:
+            ui.WebDriverWait(self.driver, timeout).until_not(EC.visibility_of_element_located((By.XPATH, locator)))
+            return True
+        except TimeoutException:
+            return False
+
     def Enca_intelligent_wait(self, on_element, timeout=10):
         '''
         显式等待基本封装,验证元素是否存在于页面DOM树中，存在则返回元素本身，不存在则报错
@@ -449,14 +466,6 @@ class DriverFuncation:
         if type == 'scrollTop':
             js = 'window.scrollTo(0,document.body.scrollTop=0)'
             self.driver.execute_script(js)
-            
-    def find(self, element):
-        '''
-        元素选中效果
-        '''
-        STYLE = "background: green; border: 2px solid red;"
-        self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);", element, STYLE)
-        return element
 
     # 键盘操作
     def Enca_keys(self, to_element, keys_type):
