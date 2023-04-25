@@ -42,6 +42,13 @@ class DriverFuncation:
         :return:
         '''
         return self.driver.page_source
+    def find(self, element):
+    '''
+    元素选中效果
+    '''
+    STYLE = "background: green; border: 2px solid red;"
+    self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);", element, STYLE)
+    return element
 
     def Enca_current_url(self):
         '''

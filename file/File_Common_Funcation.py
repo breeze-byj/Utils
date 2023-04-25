@@ -51,3 +51,11 @@ def Enca_get_this_file_path(file_name):
 # 若不存在***文件夹，则自动创建
 def Enca_ismkdir(file_path):
     if not os.path.exists(file_path): os.mkdir(file_path)
+   
+# 图片下载
+def download_img(url, num):
+    r = requests.get(url, stream=True)
+    if r.status_code == 200:
+        # 将内容写入图片
+        open(f'./{num}.jpg', 'wb').write(r.content)
+    del r
